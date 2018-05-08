@@ -13,16 +13,17 @@ class ListViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_view)
-
         listMaker()
     }
+
+    val contextoA = this
 
     fun listMaker(){
 
         Log.d("TRABALHO", "Entrou listMaker")
 
         //criação da arraylist
-        var theList = ArrayList<String>()
+        var theList = ArrayList<Aluno>()
 
         //busca os dados da tabela
         var dados = db.getList()
@@ -33,17 +34,28 @@ class ListViewActivity : AppCompatActivity() {
             Log.d("TRABALHO", "lista vazia")
         }else{
 
+
+
             //preenche array somente com os dados da segunda coluna(nome)
             while(dados.moveToNext()){
-                theList.add(dados.getString(1))
 
-                //cria um adapter e o preenche utilizando os dados que estão na array
-                var listAdapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,theList)
+                var alunoAux = Aluno(dados.getString(dados.getColumnIndex("matricula"))
+                                    ,dados.getString(dados.getColumnIndex("nome"))
+                                    ,dados.getString(dados.getColumnIndex("foto_url")))
 
-                //adiciona o adapter a ListView da tela
-                lista.adapter = listAdapter
+                theList.add(alunoAux)
 
             }
+
+
+            //adiciona o adapter a ListView da tela
+
+            Log.d("lista", "matricula1: " + theList.get(0).matricula)
+            Log.d("lista", "matricula2: " + theList.get(1).matricula)
+
+            val adapter = AlunoAdapter(this,theList)
+
+            lista.adapter = adapter
 
         }
 
