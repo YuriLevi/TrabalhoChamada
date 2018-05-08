@@ -1,24 +1,16 @@
 package com.example.trabalhochamada
 
 import android.content.Context
-import android.database.Cursor
-import android.os.Parcel
-import android.os.Parcelable
-import android.widget.ResourceCursorAdapter
-import android.widget.TextView
-import android.R.attr.name
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import com.example.trabalhochamada.R.id.*
+import android.widget.TextView
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.PicassoProvider
 
-
-class AlunoAdapter (private val context: Context, private val dataSource: ArrayList<Aluno>) : BaseAdapter() {
+class TurmaAdapter(private val context: Context, private val dataSource: ArrayList<Turma>) : BaseAdapter() {
 
 
     private val inflater: LayoutInflater
@@ -44,22 +36,23 @@ class AlunoAdapter (private val context: Context, private val dataSource: ArrayL
         Log.d("TRABALHO", "entrou no get view")
 
         // Get view for row item
-        val rowView = inflater.inflate(R.layout.list_item_aluno, parent, false)
+        val rowView = inflater.inflate(R.layout.list_item_turma, parent, false)
 
 
-        val matricula =  rowView.findViewById<TextView>(R.id.aluno_matricula)
-        val nome = rowView.findViewById<TextView>(R.id.aluno_nome)
-        val foto = rowView.findViewById<ImageView>(R.id.aluno_foto)
+        val codigo =  rowView.findViewById<TextView>(R.id.turma_codigo)
+        val hora = rowView.findViewById<TextView>(R.id.turma_hora)
+        val sala = rowView.findViewById<TextView>(R.id.turma_sala)
+        val disciplina = rowView.findViewById<TextView>(R.id.turma_disciplina)
 
-        val aluno = getItem(position) as Aluno
 
-        matricula.text = aluno.matricula
-        nome.text = aluno.nome
+        val turma = getItem(position) as Turma
 
-        Picasso.get().load(aluno.imageUrl).placeholder(R.mipmap.ic_launcher).into(foto)
+        codigo.text = "Turma: " + turma.codigo
+        hora.text = "Horario: " + turma.hora
+        sala.text = "sala: " + turma.sala
+        disciplina.text = "disciplina: " + turma.disciplina
+
 
         return rowView
     }
-
-
 }

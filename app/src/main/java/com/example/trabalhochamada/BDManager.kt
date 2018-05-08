@@ -157,4 +157,20 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
     }
 
 
+    fun getList2() : Cursor {
+
+        val query = "SELECT * FROM " +NOME_TABELAT
+
+        val db = this.writableDatabase
+
+        val cursor = db.rawQuery(query,null)
+
+        return cursor
+
+    }
+
+
+
+
+
 }

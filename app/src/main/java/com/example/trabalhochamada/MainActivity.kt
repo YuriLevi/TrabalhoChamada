@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
                 Toast.makeText(this, "Sucesso", Toast.LENGTH_LONG).show()
 
-                val novaTela = Intent(this, ListViewActivity::class.java)
+                val novaTela = Intent(this, TurmaActivity::class.java)
 
                 startActivity(novaTela)
 

@@ -7,7 +7,7 @@
     tools:context=".ListViewActivity">
 
     <ListView
-        android:id="@+id/lista_aluno"
+        android:id="@+id/lista_turma"
         android:layout_width="385dp"
         android:layout_height="435dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,14 +18,14 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textViewTurma"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:text="Turma: "
+        android:text="Turmas"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/lista_aluno"
+        app:layout_constraintBottom_toTopOf="@+id/lista"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
