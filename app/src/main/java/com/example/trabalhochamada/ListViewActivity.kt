@@ -5,14 +5,23 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
-import com.example.trabalhochamada.R.id.lista
+import android.widget.Button
+import android.widget.CheckBox
 import com.example.trabalhochamada.R.id.lista_aluno
 import kotlinx.android.synthetic.main.activity_list_view.*
+import kotlinx.android.synthetic.main.list_item_aluno.view.*
+import java.sql.Date
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.log
+
+//import android.support.test.espresso.matcher.ViewMatchers.isChecked
+
+
 
 class ListViewActivity : AppCompatActivity() {
-
-
 
 
     val db = BDManager(this)
@@ -34,67 +43,84 @@ class ListViewActivity : AppCompatActivity() {
 
             detailIntent.putExtra(EXTRA_CODIGO, turma.codigo.toString())
 
-
             return detailIntent
         }
-
 
     }
 
 
 
-
-
-    fun listMaker(){
+    fun listMaker() {
 
         Log.d("TRABALHO", "Entrou listMaker")
 
-        textViewTurma.text =  "turma: " +intent.extras.getString(EXTRA_CODIGO)
+        textViewTurma.text = "Turma: " + intent.extras.getString(EXTRA_CODIGO)
 
         //criação da arraylist
-        var theList = ArrayList<Aluno>()
+        var theListCodAluno = ArrayList<String>()
 
         //busca os dados da tabela
-        var dados = db.getList()
+        var dadosMatricula = db.getListTurmaHasAluno(intent.extras.getString(EXTRA_CODIGO))
 
         //verifica se dados esta vazio
-        if(dados.count ==0){
-
+        if (dadosMatricula.count == 0) {
             Log.d("TRABALHO", "lista vazia")
-        }else{
-
-
-
+        } else {
+            Log.d("loop codigos", "Entrou while")
             //preenche array somente com os dados da segunda coluna(nome)
-            while(dados.moveToNext()){
+            while (dadosMatricula.moveToNext()) {
 
-                var alunoAux = Aluno(dados.getString(dados.getColumnIndex("matricula"))
-                                    ,dados.getString(dados.getColumnIndex("nome"))
-                                    ,dados.getString(dados.getColumnIndex("foto_url")))
 
-                theList.add(alunoAux)
+                var codAluno = dadosMatricula.getString(0)
+
+                Log.d("loop codigos", "codigo: " + codAluno)
+
+                theListCodAluno.add(codAluno)
 
             }
 
 
-            //adiciona o adapter a ListView da tela
+            //criação da arraylist
+            var theList = ArrayList<Aluno>()
 
-            Log.d("lista", "matricula1: " + theList.get(0).matricula)
-            Log.d("lista", "matricula2: " + theList.get(1).matricula)
+            //busca os dados da tabela
+            var dadosAlunos = db.getListAlunosPorTurma(theListCodAluno)
+
+            //verifica se dados esta vazio
+            if (dadosAlunos.count == 0) {
+
+                Log.d("TRABALHO", "lista vazia")
+            } else {
+
+
+                //preenche array somente com os dados da segunda coluna(nome)
+                while (dadosAlunos.moveToNext()) {
+
+                    var alunoAux = Aluno(dadosAlunos.getString(dadosAlunos.getColumnIndex("matricula"))
+                            , dadosAlunos.getString(dadosAlunos.getColumnIndex("nome"))
+                            , dadosAlunos.getString(dadosAlunos.getColumnIndex("foto_url")),false)
+
+                    theList.add(alunoAux)
+
+                }
+
+
+                //adiciona o adapter a ListView da tela
+
+                val adapter = AlunoAdapter(this, theList)
+
+                lista_aluno.adapter = adapter
 
 
 
-            val adapter = AlunoAdapter(this,theList)
+                
 
-            lista_aluno.adapter = adapter
+            }
 
         }
 
 
-
-
     }
-
 
 
 }
