@@ -1,9 +1,11 @@
 package com.example.trabalhochamada
 
+import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.trabalhochamada.R.id.lista_turma
+import com.example.trabalhochamada.ListViewActivity.Companion.EXTRA_CODIGO
 import kotlinx.android.synthetic.main.activity_turma.*
 
 class TurmaActivity : AppCompatActivity() {
@@ -19,6 +21,23 @@ class TurmaActivity : AppCompatActivity() {
     }
 
 
+    companion object {
+        const val EXTRA_CODIGOP = "codigoP"
+
+
+        fun newIntent(context: Context, id: String): Intent {
+            val detailIntent = Intent(context, TurmaActivity::class.java)
+
+            detailIntent.putExtra(EXTRA_CODIGOP, id)
+
+
+            return detailIntent
+        }
+
+
+    }
+
+
 
     fun listMaker(){
 
@@ -29,7 +48,7 @@ class TurmaActivity : AppCompatActivity() {
         var theList = ArrayList<Turma>()
 
         //busca os dados da tabela
-        var dados = db.getList2()
+        var dados = db.getList2(intent.extras.getString(EXTRA_CODIGOP))
 
         //verifica se dados esta vazio
         if(dados.count ==0){
@@ -42,7 +61,7 @@ class TurmaActivity : AppCompatActivity() {
             //preenche array somente com os dados da segunda coluna(nome)
             while(dados.moveToNext()){
 
-                var turmaAux = Turma(dados.getInt(1)
+                var turmaAux = Turma(dados.getString(dados.getColumnIndex("codigo"))
                         ,dados.getString(dados.getColumnIndex("hora"))
                         ,dados.getInt(3)
                         ,dados.getString(dados.getColumnIndex("disciplina")))

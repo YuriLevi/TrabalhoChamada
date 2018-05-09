@@ -19,7 +19,7 @@
 
     <RelativeLayout
         android:id="@+id/aluno_text_layout"
-        android:layout_width="278dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/aluno_foto">
@@ -47,4 +47,15 @@
             tools:text="Nome" />
 
     </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/checkBoxFalta"
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@+id/aluno_text_layout"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="27dp" />
+
+
 </RelativeLayout>

@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.os.FileObserver.CREATE
 import android.util.Log
 
-val NOME_BD = "betaBD17"
+val NOME_BD = "betaBD19"
 
 //Professor
 val NOME_TABELAP = "professor"
@@ -38,6 +38,13 @@ val COLUNA_IDTHA = "id"
 val COLUNA_CODIGOT_FK = "codigot_fk"
 val COLUNA_MATRICULAA_FK = "matircula_fk"
 
+//Chamada
+val NOME_TABELAC = "chamada"
+val COLUNA_IDC = "id"
+val COLUNA_DATA = "data"
+val COLUNA_PROFESSOR_FK = "professor_fk"
+val COLUNA_ALUNO_FK = "aluno_fk"
+val COLUNA_PRESENCA = "presenca"
 
 
 
@@ -69,12 +76,20 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
                 COLUNA_CODIGOT_FK+ " VARCHAR, " +
                 COLUNA_MATRICULAA_FK+ "  VARCHAR(9)) "
 
+        val createTabelaChamada = "CREATE TABLE " +NOME_TABELAC+ " (" +
+                COLUNA_IDC+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUNA_DATA+ " VARCHAR, " +
+                COLUNA_PROFESSOR_FK+ " INTEGER, " +
+                COLUNA_ALUNO_FK+ " VARCHAR(9), " +
+                COLUNA_PRESENCA+ "  VARCHAR(25)) "
+
 
 
         db?.execSQL(createTabelaProfessor)
         db?.execSQL(createTabelaAluno)
         db?.execSQL(createTabelaTurma)
         db?.execSQL(createTabelaHasAluno)
+        db?.execSQL(createTabelaChamada)
 
         //Inserir Professor
         var professor1 = ContentValues()

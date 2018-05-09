@@ -7,8 +7,22 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    //Login Pre Inseridos
+
+    //professor1
+    //Login jorel
+    //Senha 12345
+
+    //professor2
+    //Login silvio
+    //Senha 54321
+
+
 
     val db = BDManager(this)
 
@@ -16,8 +30,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //db.cargaDados()
+        val today = Calendar.getInstance()
 
+        val data = SimpleDateFormat("d/M/Y").format(today.time)
+
+
+        Log.d("calculandodata", "data: " + data)
     }
 
     fun fazerLogin(view: View){
@@ -36,13 +54,16 @@ class MainActivity : AppCompatActivity() {
             var validaUsuario = db.verificaLogin(vProfessor)
 
             //Caso o login e senha esteja correto, mostra um toast e chama a nova tela
-            if (validaUsuario == true) {
+            if (validaUsuario.get("check") == true) {
 
                 Toast.makeText(this, "Sucesso", Toast.LENGTH_LONG).show()
 
-                val novaTela = Intent(this, TurmaActivity::class.java)
+                //val novaTela = Intent(this, TurmaActivity::class.java)
+
+                val novaTela = TurmaActivity.newIntent(this,validaUsuario.get("id").toString() )
 
                 startActivity(novaTela)
+
 
             } else {
 
