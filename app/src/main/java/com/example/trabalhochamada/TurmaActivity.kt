@@ -5,8 +5,10 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.trabalhochamada.ListViewActivity.Companion.EXTRA_CODIGO
+import android.widget.Toast
+//import com.example.trabalhochamada.ListViewActivity.Companion.EXTRA_CODIGO
 import kotlinx.android.synthetic.main.activity_turma.*
+import java.util.*
 
 class TurmaActivity : AppCompatActivity() {
 
@@ -48,7 +50,7 @@ class TurmaActivity : AppCompatActivity() {
         var theList = ArrayList<Turma>()
 
         //busca os dados da tabela
-        var dados = db.getList2(intent.extras.getString(EXTRA_CODIGOP))
+        var dados = db.getListTurma(intent.extras.getString(EXTRA_CODIGOP))
 
         //verifica se dados esta vazio
         if(dados.count ==0){
@@ -63,15 +65,15 @@ class TurmaActivity : AppCompatActivity() {
 
                 var turmaAux = Turma(dados.getString(dados.getColumnIndex("codigo"))
                         ,dados.getString(dados.getColumnIndex("hora"))
-                        ,dados.getInt(3)
+                        ,dados.getInt(2)
+                        ,dados.getInt(4)
                         ,dados.getString(dados.getColumnIndex("disciplina")))
 
-                Log.d("turmaZ", "turma: " + dados.getInt(1))
+                Log.d("turmaZ", "turma: " + dados.getInt(4))
 
                 theList.add(turmaAux)
 
             }
-
 
 
             val adapter = TurmaAdapter(this,theList)
@@ -83,14 +85,30 @@ class TurmaActivity : AppCompatActivity() {
             val context = this
 
             lista_turma.setOnItemClickListener { _, _, position, _ ->
-                // 1
+
                 val selectedTurma = theList[position]
 
-                // 2
-                val detailIntent = ListViewActivity.newIntent(context, selectedTurma)
+                val today = Calendar.getInstance()
 
-                // 3
-                startActivity(detailIntent)
+
+
+                Log.d("zzzdasd", "dia da turma:" +selectedTurma.dia+ " dia da semana " +  today.get(Calendar.DAY_OF_WEEK) )
+
+                if(selectedTurma.dia == today.get(Calendar.DAY_OF_WEEK)){
+
+                    val detailIntent = ListViewActivity.newIntent(context, selectedTurma, intent.extras.getString(EXTRA_CODIGOP) )
+
+                    startActivity(detailIntent)
+
+                }else{
+
+
+                    Toast.makeText(this, "Data Incorreta para abrir a turma", Toast.LENGTH_LONG).show()
+                }
+
+                
+
+
             }
 
 

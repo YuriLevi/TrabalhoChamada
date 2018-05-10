@@ -1,5 +1,6 @@
 package com.example.trabalhochamada
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -9,8 +10,8 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
-import com.example.trabalhochamada.R.id.activity_chooser_view_content
-import com.example.trabalhochamada.R.id.lista_aluno
+import android.widget.Toast
+import com.example.trabalhochamada.R.id.*
 import kotlinx.android.synthetic.main.activity_list_view.*
 import kotlinx.android.synthetic.main.list_item_aluno.view.*
 import java.sql.Date
@@ -36,13 +37,16 @@ class ListViewActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_CODIGO = "codigo"
+        const val EXTRA_CODIGOT = "codigo"
+        const val EXTRA_CODIGOP = "codigop"
 
 
-        fun newIntent(context: Context, turma: Turma): Intent {
+
+        fun newIntent(context: Context, turma: Turma, codigoP : String): Intent {
             val detailIntent = Intent(context, ListViewActivity::class.java)
 
-            detailIntent.putExtra(EXTRA_CODIGO, turma.codigo.toString())
+            detailIntent.putExtra(EXTRA_CODIGOT, turma.codigo.toString())
+            detailIntent.putExtra(EXTRA_CODIGOP, codigoP)
 
             return detailIntent
         }
@@ -55,13 +59,13 @@ class ListViewActivity : AppCompatActivity() {
 
         Log.d("TRABALHO", "Entrou listMaker")
 
-        textViewTurma.text = "Turma: " + intent.extras.getString(EXTRA_CODIGO)
+        textViewTurma.text = "Turma: " + intent.extras.getString(EXTRA_CODIGOT)
 
         //criação da arraylist
         var theListCodAluno = ArrayList<String>()
 
         //busca os dados da tabela
-        var dadosMatricula = db.getListTurmaHasAluno(intent.extras.getString(EXTRA_CODIGO))
+        var dadosMatricula = db.getListTurmaHasAluno(intent.extras.getString(EXTRA_CODIGOT))
 
         //verifica se dados esta vazio
         if (dadosMatricula.count == 0) {
@@ -113,36 +117,27 @@ class ListViewActivity : AppCompatActivity() {
 
                 lista_aluno.adapter = adapter
 
+
+
                // adapter.defaultCV()
                 salvarChamada.setOnClickListener(View.OnClickListener {
 
-                  var theList2 = adapter.getListaAtualizada()
 
-                    theList2.get(0).marcado
+                    var theList2 = adapter.getListaAtualizada()
 
-                    Log.d("checknaid", " posicao 0 -status: " + theList.get(0).marcado
-                            + " posicao 1 -status: " + theList.get(1).marcado
-                            + " posicao 2 -status: " + theList.get(2).marcado
-                            + " posicao 3 -status: " + theList.get(3).marcado
-                            + " posicao 4 -status: " + theList.get(4).marcado)
+                    val today = Calendar.getInstance()
+                    val data = SimpleDateFormat("Y/d/M").format(today.time)
 
 
 
-                    ////////////FAZER INSERT
 
+                    db.insertChamada(theList2, intent.extras.getString(EXTRA_CODIGOT),intent.extras.getString(EXTRA_CODIGOP) ,data)
 
-                   /* var result = adapter.getCheckStatus()
+                    Toast.makeText(this, "Chamada Concluída", Toast.LENGTH_LONG).show()
 
-                    Log.d("checknaid", " posicao 0 -status: " + result.get("0")
-                            + " posicao 1 -status: " + result.get("1")
-                            + " posicao 2 -status: " + result.get("2")
-                            + " posicao 3 -status: " + result.get("3")
-                            + " posicao 4 -status: " + result.get("4"))
-
-                   */
+                    finish()
 
                 })
-
 
 
             }
@@ -151,6 +146,20 @@ class ListViewActivity : AppCompatActivity() {
 
 
     }
+
+    /*
+
+    Campo dos logs
+
+    Log.d("checknaid", " posicao 0 -status: " + theList.get(0).marcado
+                            + " posicao 1 -status: " + theList.get(1).marcado
+                            + " posicao 2 -status: " + theList.get(2).marcado
+                            + " posicao 3 -status: " + theList.get(3).marcado
+                            + " posicao 4 -status: " + theList.get(4).marcado)
+
+
+
+     */
 
 
 }

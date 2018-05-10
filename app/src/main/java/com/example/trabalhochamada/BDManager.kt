@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.os.FileObserver.CREATE
 import android.util.Log
 
-val NOME_BD = "betaBD19"
+val NOME_BD = "betaBD23"
 
 //Professor
 val NOME_TABELAP = "professor"
@@ -28,6 +28,7 @@ val NOME_TABELAT = "turma"
 val COLUNA_IDT = "id"
 val COLUNA_CODIGOT = "codigo"
 val COLUNA_HORAT = "hora"
+val COLUNA_DIAT = "dia"
 val COLUNA_SALAT = "sala"
 val COLUNA_DISCIPLINAT = "disciplina"
 val COLUNA_IDP_FK = "idp_fk"
@@ -41,7 +42,8 @@ val COLUNA_MATRICULAA_FK = "matircula_fk"
 //Chamada
 val NOME_TABELAC = "chamada"
 val COLUNA_IDC = "id"
-val COLUNA_DATA = "data"
+val COLUNA_DATA = "data" //ex: 2 == segunda
+val COLUNA_TURMA = "turma"
 val COLUNA_PROFESSOR_FK = "professor_fk"
 val COLUNA_ALUNO_FK = "aluno_fk"
 val COLUNA_PRESENCA = "presenca"
@@ -66,6 +68,7 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         val createTabelaTurma= "CREATE TABLE " +NOME_TABELAT+ " (" +
                 COLUNA_IDT+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUNA_CODIGOT+ " VARCHAR, " +
+                COLUNA_DIAT+ " INTEGER, " +
                 COLUNA_HORAT+ " VARCHAR(5), " +
                 COLUNA_SALAT+ " INTEGER, " +
                 COLUNA_DISCIPLINAT+ " VARCHAR(50), " +
@@ -79,6 +82,7 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         val createTabelaChamada = "CREATE TABLE " +NOME_TABELAC+ " (" +
                 COLUNA_IDC+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUNA_DATA+ " VARCHAR, " +
+                COLUNA_TURMA+ " VARCHAR, " +
                 COLUNA_PROFESSOR_FK+ " INTEGER, " +
                 COLUNA_ALUNO_FK+ " VARCHAR(9), " +
                 COLUNA_PRESENCA+ "  VARCHAR(25)) "
@@ -183,6 +187,7 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         turma1.put(COLUNA_CODIGOT, "MR-01")
         turma1.put(COLUNA_HORAT, "7:00 - 8:30")
         turma1.put(COLUNA_SALAT, 502)
+        turma1.put(COLUNA_DIAT, 2)
         turma1.put(COLUNA_DISCIPLINAT, "Filosofia")
         turma1.put(COLUNA_IDP_FK, 1)
 
@@ -190,6 +195,7 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         turma2.put(COLUNA_CODIGOT, "MR-02")
         turma2.put(COLUNA_HORAT, "8:30 - 10:00")
         turma2.put(COLUNA_SALAT, 401)
+        turma2.put(COLUNA_DIAT, 3)
         turma2.put(COLUNA_DISCIPLINAT, "Historia")
         turma2.put(COLUNA_IDP_FK, 1)
 
@@ -197,12 +203,14 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         turma3.put(COLUNA_CODIGOT, "MR-03")
         turma3.put(COLUNA_HORAT, "7:00 - 8:30")
         turma3.put(COLUNA_SALAT, 204)
+        turma3.put(COLUNA_DIAT, 4)
         turma3.put(COLUNA_DISCIPLINAT, "Matematica")
         turma3.put(COLUNA_IDP_FK, 2)
 
         turma4.put(COLUNA_CODIGOT, "MR-04")
         turma4.put(COLUNA_HORAT, "8:30 - 10:00")
         turma4.put(COLUNA_SALAT, 206)
+        turma4.put(COLUNA_DIAT, 5)
         turma4.put(COLUNA_DISCIPLINAT, "Fisica")
         turma4.put(COLUNA_IDP_FK, 2)
 
@@ -406,7 +414,7 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
 
     }
 
-    fun getList2(id_professor: String) : Cursor {
+    fun getListTurma(id_professor: String) : Cursor {
 
         val query = "SELECT * FROM " +NOME_TABELAT+ " WHERE " +COLUNA_IDP_FK+ " = '" +id_professor+"'"
 
@@ -418,6 +426,41 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
 
     }
 
+    fun insertChamada(listaChamada : ArrayList<Aluno>,turma :String, idProfessor : String , data : String){
+
+        var i :Int = 0
+        val iend = listaChamada.size
+
+        while (i<iend){
+
+            var chamada = ContentValues()
+
+            val db = this.writableDatabase
+
+            chamada.put(COLUNA_DATA, data)
+            chamada.put(COLUNA_TURMA,turma )
+            chamada.put(COLUNA_PROFESSOR_FK, idProfessor.toInt())
+            chamada.put(COLUNA_ALUNO_FK, listaChamada.get(i).matricula)
+
+            if(listaChamada.get(i).marcado == true) {
+
+                chamada.put(COLUNA_PRESENCA, "ausente")
+
+            }else{
+
+                chamada.put(COLUNA_PRESENCA, "presente")
+
+            }
+
+
+            db.insert(NOME_TABELAC,null,chamada)
+
+            i++
+        }
+
+
+
+    }
 
 
 

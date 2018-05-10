@@ -30,12 +30,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val today = Calendar.getInstance()
+        val dayLongName = today.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
 
-        val data = SimpleDateFormat("d/M/Y").format(today.time)
+        val day = today.get(Calendar.DAY_OF_WEEK)
+
+        if(5 == Calendar.DAY_OF_WEEK){
+
+            //Log.d("dia:", "hoje é: " + day)
+        }
 
 
-        Log.d("calculandodata", "data: " + data)
+
+
     }
 
     fun fazerLogin(view: View){
