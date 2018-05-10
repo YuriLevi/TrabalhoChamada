@@ -106,7 +106,7 @@ class TurmaActivity : AppCompatActivity() {
                     Toast.makeText(this, "Data Incorreta para abrir a turma", Toast.LENGTH_LONG).show()
                 }
 
-                
+
 
 
             }

@@ -20,11 +20,25 @@
             android:textSize="18sp"
             tools:text="Turma" />
 
+
+        <TextView
+            android:id="@+id/turma_dia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/turma_codigo"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textSize="16sp"
+            tools:text="dia" />
+
         <TextView
             android:id="@+id/turma_hora"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/turma_codigo"
+            android:layout_below="@+id/turma_dia"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"

@@ -43,14 +43,16 @@ class TurmaAdapter(private val context: Context, private val dataSource: ArrayLi
         val hora = rowView.findViewById<TextView>(R.id.turma_hora)
         val sala = rowView.findViewById<TextView>(R.id.turma_sala)
         val disciplina = rowView.findViewById<TextView>(R.id.turma_disciplina)
+        val dia = rowView.findViewById<TextView>(R.id.turma_dia)
 
 
         val turma = getItem(position) as Turma
 
         codigo.text = "Turma: " + turma.codigo
+        dia.text = "Dia: " + turma.convertDia()
         hora.text = "Horario: " + turma.hora
-        sala.text = "sala: " + turma.sala
-        disciplina.text = "disciplina: " + turma.disciplina
+        sala.text = "Sala: " + turma.sala
+        disciplina.text = "Disciplina: " + turma.disciplina
 
 
         return rowView
