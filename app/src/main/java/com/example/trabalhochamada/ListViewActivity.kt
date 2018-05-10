@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
+import com.example.trabalhochamada.R.id.activity_chooser_view_content
 import com.example.trabalhochamada.R.id.lista_aluno
 import kotlinx.android.synthetic.main.activity_list_view.*
 import kotlinx.android.synthetic.main.list_item_aluno.view.*
@@ -109,9 +110,38 @@ class ListViewActivity : AppCompatActivity() {
 
                 val adapter = AlunoAdapter(this, theList)
 
+
                 lista_aluno.adapter = adapter
 
+               // adapter.defaultCV()
+                salvarChamada.setOnClickListener(View.OnClickListener {
 
+                  var theList2 = adapter.getListaAtualizada()
+
+                    theList2.get(0).marcado
+
+                    Log.d("checknaid", " posicao 0 -status: " + theList.get(0).marcado
+                            + " posicao 1 -status: " + theList.get(1).marcado
+                            + " posicao 2 -status: " + theList.get(2).marcado
+                            + " posicao 3 -status: " + theList.get(3).marcado
+                            + " posicao 4 -status: " + theList.get(4).marcado)
+
+
+
+                    ////////////FAZER INSERT
+
+
+                   /* var result = adapter.getCheckStatus()
+
+                    Log.d("checknaid", " posicao 0 -status: " + result.get("0")
+                            + " posicao 1 -status: " + result.get("1")
+                            + " posicao 2 -status: " + result.get("2")
+                            + " posicao 3 -status: " + result.get("3")
+                            + " posicao 4 -status: " + result.get("4"))
+
+                   */
+
+                })
 
 
 

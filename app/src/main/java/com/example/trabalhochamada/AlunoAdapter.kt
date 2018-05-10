@@ -1,11 +1,11 @@
 package com.example.trabalhochamada
 
+import android.R.attr.*
 import android.content.Context
 import android.database.Cursor
 import android.os.Parcel
 import android.os.Parcelable
-import android.R.attr.name
-import android.R.attr.onClick
+import android.content.ContentValues
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +18,23 @@ import com.squareup.picasso.PicassoProvider
 
 class AlunoAdapter (private val context: Context, private val dataSource: ArrayList<Aluno>) : BaseAdapter() {
 
+   //var cANDid = ContentValues()
+
+
+   /* fun defaultCV(){
+
+        var i :Int = 0
+        var iend :Int = dataSource.size
+
+        while (i < iend){
+
+            cANDid.put(i.toString(),false)
+            i++
+
+        }
+
+
+    }*/
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -37,12 +54,9 @@ class AlunoAdapter (private val context: Context, private val dataSource: ArrayL
         return position.toLong()
     }
 
-    fun getCheckbox(position: Int){
-
-    }
 
     //4
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup) : View {
         Log.d("TRABALHO", "entrou no get view")
 
         // Get view for row item
@@ -63,9 +77,38 @@ class AlunoAdapter (private val context: Context, private val dataSource: ArrayL
 
         Picasso.get().load(aluno.imageUrl).placeholder(R.mipmap.ic_launcher).into(foto)
 
+
+        checkbox.setOnClickListener(View.OnClickListener {
+
+                //cANDid.put(position.toString(),checkbox.isChecked)
+
+                dataSource.get(position).teste(checkbox.isChecked)
+
+            /*Log.d("checknaid", " posicao 0 -status: " + cANDid.get("0")
+                                            + " posicao 1 -status: " + cANDid.get("1")
+                                            + " posicao 2 -status: " + cANDid.get("2")
+                                            + " posicao 3 -status: " + cANDid.get("3")
+                                            + " posicao 4 -status: " + cANDid.get("4"))*/
+
+            //Log.d("check1234574", "pos: " + position + " status: " + checkbox.isChecked)
+
+
+        })
+
         return rowView
     }
 
+    /*fun getCheckStatus(): ContentValues{
+
+        return cANDid
+
+    }*/
+
+    fun getListaAtualizada() : ArrayList<Aluno>{
+
+        return dataSource
+
+    }
 
 
 }
