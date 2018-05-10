@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:fontFamily="monospace"
             android:textSize="18sp"
             tools:text="Turma" />
 
@@ -30,6 +31,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
+            android:fontFamily="monospace"
             android:maxLines="3"
             android:textSize="16sp"
             tools:text="dia" />
@@ -43,6 +45,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
+            android:fontFamily="monospace"
             android:maxLines="3"
             android:textSize="16sp"
             tools:text="hora" />
@@ -56,6 +59,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
+            android:fontFamily="monospace"
             android:maxLines="3"
             android:textSize="16sp"
             tools:text="sala" />
@@ -69,6 +73,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
+            android:fontFamily="monospace"
             android:maxLines="3"
             android:textSize="16sp"
             tools:text="disciplina" />

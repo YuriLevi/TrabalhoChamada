@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-//import com.example.trabalhochamada.ListViewActivity.Companion.EXTRA_CODIGO
 import kotlinx.android.synthetic.main.activity_turma.*
 import java.util.*
 
@@ -46,13 +45,13 @@ class TurmaActivity : AppCompatActivity() {
 
         Log.d("TRABALHO", "Entrou listMakerTurma")
 
-        //criação da arraylist
+
         var theList = ArrayList<Turma>()
 
-        //busca os dados da tabela
+
         var dados = db.getListTurma(intent.extras.getString(EXTRA_CODIGOP))
 
-        //verifica se dados esta vazio
+
         if(dados.count ==0){
 
             Log.d("TRABALHO", "lista vazia")
@@ -60,7 +59,6 @@ class TurmaActivity : AppCompatActivity() {
 
 
 
-            //preenche array somente com os dados da segunda coluna(nome)
             while(dados.moveToNext()){
 
                 var turmaAux = Turma(dados.getString(dados.getColumnIndex("codigo"))
@@ -79,7 +77,6 @@ class TurmaActivity : AppCompatActivity() {
             val adapter = TurmaAdapter(this,theList)
 
             lista_turma.adapter = adapter
-
 
 
             val context = this
@@ -105,7 +102,6 @@ class TurmaActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "Data Incorreta para abrir a turma", Toast.LENGTH_LONG).show()
                 }
-
 
 
 

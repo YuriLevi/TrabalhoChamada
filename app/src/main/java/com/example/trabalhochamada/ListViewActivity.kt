@@ -1,25 +1,16 @@
 package com.example.trabalhochamada
 
-import android.app.Activity
+
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.CheckBox
 import android.widget.Toast
-import com.example.trabalhochamada.R.id.*
 import kotlinx.android.synthetic.main.activity_list_view.*
-import kotlinx.android.synthetic.main.list_item_aluno.view.*
-import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.log
-
-//import android.support.test.espresso.matcher.ViewMatchers.isChecked
 
 
 
@@ -54,25 +45,24 @@ class ListViewActivity : AppCompatActivity() {
     }
 
 
-
     fun listMaker() {
 
         Log.d("TRABALHO", "Entrou listMaker")
 
         textViewTurma.text = "Turma: " + intent.extras.getString(EXTRA_CODIGOT)
 
-        //criação da arraylist
+
         var theListCodAluno = ArrayList<String>()
 
-        //busca os dados da tabela
+
         var dadosMatricula = db.getListTurmaHasAluno(intent.extras.getString(EXTRA_CODIGOT))
 
-        //verifica se dados esta vazio
+
         if (dadosMatricula.count == 0) {
             Log.d("TRABALHO", "lista vazia")
         } else {
             Log.d("loop codigos", "Entrou while")
-            //preenche array somente com os dados da segunda coluna(nome)
+
             while (dadosMatricula.moveToNext()) {
 
 
@@ -85,20 +75,18 @@ class ListViewActivity : AppCompatActivity() {
             }
 
 
-            //criação da arraylist
             var theList = ArrayList<Aluno>()
 
-            //busca os dados da tabela
+
             var dadosAlunos = db.getListAlunosPorTurma(theListCodAluno)
 
-            //verifica se dados esta vazio
+
             if (dadosAlunos.count == 0) {
 
                 Log.d("TRABALHO", "lista vazia")
             } else {
 
 
-                //preenche array somente com os dados da segunda coluna(nome)
                 while (dadosAlunos.moveToNext()) {
 
                     var alunoAux = Aluno(dadosAlunos.getString(dadosAlunos.getColumnIndex("matricula"))
@@ -110,7 +98,6 @@ class ListViewActivity : AppCompatActivity() {
                 }
 
 
-                //adiciona o adapter a ListView da tela
 
                 val adapter = AlunoAdapter(this, theList)
 
@@ -118,8 +105,6 @@ class ListViewActivity : AppCompatActivity() {
                 lista_aluno.adapter = adapter
 
 
-
-               // adapter.defaultCV()
                 salvarChamada.setOnClickListener(View.OnClickListener {
 
 
@@ -127,8 +112,6 @@ class ListViewActivity : AppCompatActivity() {
 
                     val today = Calendar.getInstance()
                     val data = SimpleDateFormat("Y/d/M").format(today.time)
-
-
 
 
                     db.insertChamada(theList2, intent.extras.getString(EXTRA_CODIGOT),intent.extras.getString(EXTRA_CODIGOP) ,data)
@@ -143,7 +126,6 @@ class ListViewActivity : AppCompatActivity() {
             }
 
         }
-
 
     }
 
@@ -160,6 +142,5 @@ class ListViewActivity : AppCompatActivity() {
 
 
      */
-
 
 }

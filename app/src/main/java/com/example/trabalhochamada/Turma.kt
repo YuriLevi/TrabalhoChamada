@@ -1,6 +1,5 @@
 package com.example.trabalhochamada
 
-import java.util.*
 
 class Turma(var codigo: String,
             var hora: String,

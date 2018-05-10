@@ -5,10 +5,9 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.os.FileObserver.CREATE
 import android.util.Log
 
-val NOME_BD = "betaBD23"
+val NOME_BD = "betaBD2.6"
 
 //Professor
 val NOME_TABELAP = "professor"
@@ -53,7 +52,7 @@ val COLUNA_PRESENCA = "presenca"
 class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
     override fun onCreate(db: SQLiteDatabase?) {
 
-        //criação da tabela professor
+        //criação das tabelas professor
         val createTabelaProfessor = "CREATE TABLE " +NOME_TABELAP+ " (" +
                 COLUNA_IDP+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUNA_LOGINP+ " VARCHAR(256), " +
@@ -187,7 +186,7 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         turma1.put(COLUNA_CODIGOT, "MR-01")
         turma1.put(COLUNA_HORAT, "7:00 - 8:30")
         turma1.put(COLUNA_SALAT, 502)
-        turma1.put(COLUNA_DIAT, 2)
+        turma1.put(COLUNA_DIAT, 3)
         turma1.put(COLUNA_DISCIPLINAT, "Filosofia")
         turma1.put(COLUNA_IDP_FK, 1)
 
@@ -195,7 +194,7 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         turma2.put(COLUNA_CODIGOT, "MR-02")
         turma2.put(COLUNA_HORAT, "8:30 - 10:00")
         turma2.put(COLUNA_SALAT, 401)
-        turma2.put(COLUNA_DIAT, 3)
+        turma2.put(COLUNA_DIAT, 4)
         turma2.put(COLUNA_DISCIPLINAT, "Historia")
         turma2.put(COLUNA_IDP_FK, 1)
 
@@ -203,14 +202,14 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         turma3.put(COLUNA_CODIGOT, "MR-03")
         turma3.put(COLUNA_HORAT, "7:00 - 8:30")
         turma3.put(COLUNA_SALAT, 204)
-        turma3.put(COLUNA_DIAT, 4)
+        turma3.put(COLUNA_DIAT, 5)
         turma3.put(COLUNA_DISCIPLINAT, "Matematica")
         turma3.put(COLUNA_IDP_FK, 2)
 
         turma4.put(COLUNA_CODIGOT, "MR-04")
         turma4.put(COLUNA_HORAT, "8:30 - 10:00")
         turma4.put(COLUNA_SALAT, 206)
-        turma4.put(COLUNA_DIAT, 5)
+        turma4.put(COLUNA_DIAT, 6)
         turma4.put(COLUNA_DISCIPLINAT, "Fisica")
         turma4.put(COLUNA_IDP_FK, 2)
 
@@ -335,12 +334,12 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
 
     fun verificaLogin(usuario: Professor) : ContentValues{
 
-        //criação da query utilizando os dados recebidos de login e senha para consulta
+
         val query = "SELECT * FROM " +NOME_TABELAP+ " WHERE " +COLUNA_LOGINP+ " = '" +usuario.login+ "' AND " +COLUNA_SENHAP+ " = '" +usuario.senha+"';"
 
         val db = this.writableDatabase
 
-        //receber dados da execução da query
+
         val cursor = db.rawQuery(query,null)
 
         var validaUsuario = ContentValues()
@@ -348,7 +347,7 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         validaUsuario.put("check",false)
 
 
-        //caso a query possua algum resultado retorna true
+
         if (cursor.moveToFirst()) {
             cursor.moveToFirst()
 
@@ -384,15 +383,14 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
         var where :String = " WHERE ";
 
         var i = 0
-        var iend= theListCodAluno.size
 
 
-        while (i<iend) {
+        while (i<theListCodAluno.size) {
             Log.d("loopasd", "começou: " + i)
 
             where = where +COLUNA_MATRICULAA + " = '" + theListCodAluno.get(i)+"'"
 
-            if(i<iend-1){
+            if(i<theListCodAluno.size-1){
 
                 where = where + " OR "
             }
@@ -429,9 +427,7 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
     fun insertChamada(listaChamada : ArrayList<Aluno>,turma :String, idProfessor : String , data : String){
 
         var i :Int = 0
-        val iend = listaChamada.size
-
-        while (i<iend){
+        while (i< listaChamada.size){
 
             var chamada = ContentValues()
 
@@ -461,7 +457,6 @@ class BDManager(context: Context) : SQLiteOpenHelper(context, NOME_BD,null,1){
 
 
     }
-
 
 
 
